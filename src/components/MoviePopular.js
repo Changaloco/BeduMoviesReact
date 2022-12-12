@@ -1,38 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import { getMoviePopular } from '../services/ApiController'
-
+import React, { useEffect, useState } from "react";
+import { getMoviePopular } from "../services/ApiController";
+import Cardmovie from "./Cardmovie";
+const { Row, Col } = require("react-bootstrap");
 export const MoviePopular = () => {
-
-  const [moviePopular, setmoviePopular] = useState([])
+  const [moviePopular, setmoviePopular] = useState([]);
 
   useEffect(() => {
-    getMoviePopulars()
-}, [])
+    getMoviePopulars();
+  }, []);
 
   const getMoviePopulars = async () => {
-    let pelis = await getMoviePopular()
+    let pelis = await getMoviePopular();
 
-    pelis = pelis.results
+    pelis = pelis.results;
 
-    setmoviePopular(pelis)
-
-  }
-
+    setmoviePopular(pelis);
+  };
 
   return (
     <>
-        { moviePopular!= null ? moviePopular.map((peli) => {
+      <Row>
+        {moviePopular != null ? (
+          moviePopular.map((peli) => {
             return (
-                <article className="peli-item" key={peli.id}>
-                    <h3 className="title">{peli.title}</h3>
-                    <img src={`https://image.tmdb.org/t/p/w500/${peli.poster_path}`} alt={peli.id} className="card-img-top " style={{ maxHeight: '330px' }} loading="lazy" />
-                </article>
-
-            )
-        })
-        : <h2>No hay peliculas para mostrar</h2>
-    }
-
+              <Col
+                style={{
+                  marginBottom: "20px",
+                  marginTop: "20px",
+                }}
+                sm={4}
+              >
+                <Cardmovie peli={peli} />
+              </Col>
+            );
+          })
+        ) : (
+          <h2>No hay peliculas para mostrar</h2>
+        )}
+      </Row>
     </>
-)
-}
+  );
+};

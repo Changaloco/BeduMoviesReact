@@ -22,8 +22,6 @@ export const getVideos = async (movieId) => {
     } catch(e) {
         console.log(e)
     }
-
-
 }
 
 export const getMovie = async (movieId) => {
@@ -146,7 +144,7 @@ export const getMovieUpComing = async () => {
 
 export const findMovie = async (searchQuery) => {
     try {
-        const url = `${BASE_URL}search/movie?api_key=${API_KEY}&query=${searchQuery}`
+        const url = `${BASE_URL}search/movie?api_key=${API_KEY}&query=${searchQuery}&total_results=5`;
         const response = await fetch(url)
         const data = await response.json()
         return data
