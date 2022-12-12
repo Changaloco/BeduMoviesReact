@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { findMovie } from '../../services/ApiController';
-import { MovieSearch } from './MovieSearch';
+import  MovieSearch  from './MovieSearch';
+import {Button} from 'react-bootstrap';
 
 
 export const MovieSearchForm = () => {
@@ -33,7 +34,7 @@ export const MovieSearchForm = () => {
         <>
 
             <div className="search">
-                <h3 className="title">Search: {query}</h3>
+                <h3 style={{textAlign:"center"}} className="title">Search: {query}</h3>
                 <form onSubmit={searchMovie}>
                     <input type="text"
                         id="search_field"
@@ -43,7 +44,9 @@ export const MovieSearchForm = () => {
                         value={query}
                         onChange={changeHandler}
                     />
-                    <button id="search">Search</button>
+                    <div style={{marginTop:"30px"}}>
+                    <Button style={{display:"block",width:"100%"}} size="lg" variant="primary" type="submit" id="search">Search</Button>
+                    </div>
                 </form>
             </div>
             <div>
@@ -51,7 +54,7 @@ export const MovieSearchForm = () => {
                     <div className="container">
                         <div className="grid">
                             {movies.map((movieReq) =>
-                                <MovieSearch key={movieReq.id} {...movieReq} />)}
+                                <MovieSearch key={movieReq.id} peli={movieReq} />)}
                         </div>
                     </div>
                 ) : (
