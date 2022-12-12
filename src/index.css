@@ -147,7 +147,6 @@ input[type="button"]{
 
 .lateral{
   grid-area: lateral;
-  background: #f6f7f9;
   border-left: 1px solid #ddd;
   padding: 20px;
 }
