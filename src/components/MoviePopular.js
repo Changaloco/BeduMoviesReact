@@ -24,6 +24,7 @@ export const MoviePopular = () => {
           moviePopular.map((peli) => {
             return (
               <Col
+                key={peli.id}
                 style={{
                   marginBottom: "20px",
                   marginTop: "20px",
