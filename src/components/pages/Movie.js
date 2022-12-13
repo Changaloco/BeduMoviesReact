@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { getDetails } from "../../services/ApiController";
+import { getDetails, getVideos } from "../../services/ApiController";
 import "bootstrap/dist/css/bootstrap.css";
 import {
   Container,
@@ -14,15 +14,24 @@ import {
 } from "react-bootstrap";
 import { Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import CarouselsVideo from "../CarouselsVideo";
+import { Carousel } from 'react-bootstrap'
 
 export default function Movie(props) {
   const [movie, setMovie] = useState([]);
   const [rate, setRate] = useState(0);
+  const [video, setVideo] = useState([])
+
   const { id } = useParams();
 
   useEffect(() => {
     getMovie();
   }, []);
+
+  useEffect(() => {
+    getVideo();
+  }, []);
+
 
   const getMovie = async () => {
     let peli = await getDetails(id);
@@ -31,6 +40,12 @@ export default function Movie(props) {
     setRate(rate);
     console.log(peli);
   };
+
+  const getVideo = async () => {
+    let video = await getVideos(id);
+    setVideo(video);
+    console.log(video);
+  }
 
   const printGenres = () => {
     if (movie.genres) {
@@ -171,38 +186,38 @@ export default function Movie(props) {
                   <Row>
                     {movie.production_companies
                       ? movie.production_companies.map((company) => {
-                          return (
-                            <Col xs={4}>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
+                        return (
+                          <Col xs={4}>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Avatar
+                                alt="company.name"
+                                src={
+                                  company.logo_path
+                                    ? `https://image.tmdb.org/t/p/w500/${company.logo_path}`
+                                    : "https://www.freeiconspng.com/uploads/no-image-icon-6.png"
+                                }
+                              />
+                              <span
+                                style={{ fontWeight: "bold" }}
+                                key={company.name}
                               >
-                                <Avatar
-                                  alt="company.name"
-                                  src={
-                                    company.logo_path
-                                      ? `https://image.tmdb.org/t/p/w500/${company.logo_path}`
-                                      : "https://www.freeiconspng.com/uploads/no-image-icon-6.png"
-                                  }
-                                />
-                                <span
-                                  style={{ fontWeight: "bold" }}
-                                  key={company.name}
-                                >
-                                  {company.name}{" "}
-                                  {movie.production_companies.indexOf(company) <
+                                {company.name}{" "}
+                                {movie.production_companies.indexOf(company) <
                                   movie.production_companies.length - 1
-                                    ? ","
-                                    : ""}
-                                </span>
-                              </div>
-                            </Col>
-                          );
-                        })
+                                  ? ","
+                                  : ""}
+                              </span>
+                            </div>
+                          </Col>
+                        );
+                      })
                       : ""}
                   </Row>
                 </div>
@@ -225,10 +240,32 @@ export default function Movie(props) {
                     Go to Webpage
                   </Button>
                 </div>
+
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <Card
+              style={{
+                marginTop: "20px",
+                marginLeft: "10px",
+                marginRight: "10px",
+                width: "100%",
+              }}
+            >
+              <Card.Body>
+                <Card.Title className="text-center">Videos</Card.Title>
+                <div>
+                  <CarouselsVideo video={video} />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+
       </Container>
     </>
   );
