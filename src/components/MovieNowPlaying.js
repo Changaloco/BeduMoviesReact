@@ -24,7 +24,7 @@ export const MovieNowPlaying = () => {
         {listadoState != null ? (
           listadoState.map((peli) => {
             return (
-              <Col style={{
+              <Col key={peli.id} style={{
                 marginBottom: '20px',
                 marginTop: '20px'
               }} sm={4}>

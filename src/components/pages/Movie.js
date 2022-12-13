@@ -1,7 +1,12 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { getDetails } from "../../services/ApiController";
+import {
+  getDetails,
+  getVideos,
+  getCastMovie,
+  getSimilarMovies,
+} from "../../services/ApiController";
 import "bootstrap/dist/css/bootstrap.css";
 import {
   Container,
@@ -14,14 +19,33 @@ import {
 } from "react-bootstrap";
 import { Avatar } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import CarouselsVideo from "../CarouselsVideo";
+import MovieCast from "../MovieCast";
+import SimilarMovies from "../SimilarMovies";
 
 export default function Movie(props) {
   const [movie, setMovie] = useState([]);
   const [rate, setRate] = useState(0);
+  const [video, setVideo] = useState([]);
+  const [cast, setCast] = useState([]);
+  const [similar, setSimilar] = useState([]);
+
   const { id } = useParams();
 
   useEffect(() => {
     getMovie();
+  }, []);
+
+  useEffect(() => {
+    getVideo();
+  }, []);
+
+  useEffect(() => {
+    getCast();
+  }, []);
+
+  useEffect(() => {
+    getSimilar();
   }, []);
 
   const getMovie = async () => {
@@ -29,7 +53,21 @@ export default function Movie(props) {
     setMovie(peli);
     const rate = Math.round(movie.vote_average / 2);
     setRate(rate);
-    console.log(peli);
+  };
+
+  const getVideo = async () => {
+    let video = await getVideos(id);
+    setVideo(video);
+  };
+
+  const getCast = async () => {
+    let auxCast = await getCastMovie(id);
+    setCast(auxCast);
+  };
+
+  const getSimilar = async () => {
+    let auxSimilar = await getSimilarMovies(id);
+    setSimilar(auxSimilar);
   };
 
   const printGenres = () => {
@@ -172,7 +210,7 @@ export default function Movie(props) {
                     {movie.production_companies
                       ? movie.production_companies.map((company) => {
                           return (
-                            <Col xs={4}>
+                            <Col key={company.name} xs={4}>
                               <div
                                 style={{
                                   display: "flex",
@@ -189,10 +227,7 @@ export default function Movie(props) {
                                       : "https://www.freeiconspng.com/uploads/no-image-icon-6.png"
                                   }
                                 />
-                                <span
-                                  style={{ fontWeight: "bold" }}
-                                  key={company.name}
-                                >
+                                <span style={{ fontWeight: "bold" }}>
                                   {company.name}{" "}
                                   {movie.production_companies.indexOf(company) <
                                   movie.production_companies.length - 1
@@ -229,6 +264,27 @@ export default function Movie(props) {
             </Card>
           </Col>
         </Row>
+        <Row>
+          <Col>
+            <Card
+              style={{
+                marginTop: "20px",
+                marginLeft: "10px",
+                marginRight: "10px",
+                width: "100%",
+              }}
+            >
+              <Card.Body>
+                <Card.Title className="text-center">Videos</Card.Title>
+                <div>
+                  <CarouselsVideo video={video} />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <SimilarMovies similar={similar} />
+        <MovieCast cast={cast} />
       </Container>
     </>
   );

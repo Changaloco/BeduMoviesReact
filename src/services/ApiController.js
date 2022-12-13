@@ -152,3 +152,25 @@ export const findMovie = async (searchQuery) => {
         console.log(e)
     }
 }
+
+export const getCastMovie = async (movieId) => {
+    try {
+        const url = `${BASE_URL}movie/${movieId}/credits?api_key=${API_KEY}`
+        const response = await fetch(url)
+        const data = await response.json()
+        return data
+    } catch(e) {
+        console.log(e)
+    }
+}
+
+export const getSimilarMovies = async (movieId) => {
+    try {
+        const url = `${BASE_URL}movie/${movieId}/similar?api_key=${API_KEY}&page=1`
+        const response = await fetch(url)
+        const data = await response.json()
+        return data
+    } catch(e) {
+        console.log(e)
+    }
+}

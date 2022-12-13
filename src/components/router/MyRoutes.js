@@ -16,7 +16,7 @@ export const MyRoutes = () => {
                     <Route path='/nowplaying' element={<MovieNowPlaying />}></Route>
                     <Route path='/porpular' element={<MoviePopular />}></Route>
                     <Route path='/upcoming' element={<MovieUpComing />}></Route>
-                    <Route path='/filter/:search' element={<MovieSearch />}></Route>
+                    <Route exact path='/filter/:search' element={<MovieSearch />}></Route>
                     <Route exact path='/movie/:id' element={<Movie/>}></Route>
                 </Routes>
             </section>
