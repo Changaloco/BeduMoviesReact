@@ -109,9 +109,9 @@ export const getMovieTrending = async (timeWindow = 'week', type = 'movie') => {
     }
 }
 
-export const getMovieNowPlaying = async () => {
+export const getMovieNowPlaying = async (page) => {
     try {
-        const url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}`
+        const url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}&page=${page}`
         const response = await fetch(url)
         const data = await response.json()
         return data
@@ -120,9 +120,9 @@ export const getMovieNowPlaying = async () => {
     }
 }
 
-export const getMoviePopular = async () => {
+export const getMoviePopular = async (page) => {
     try {
-        const url = `${BASE_URL}movie/popular?api_key=${API_KEY}`
+        const url = `${BASE_URL}movie/popular?api_key=${API_KEY}&page=${page}`
         const response = await fetch(url)
         const data = await response.json()
         return data
@@ -131,9 +131,9 @@ export const getMoviePopular = async () => {
     }
 }
 
-export const getMovieUpComing = async () => {
+export const getMovieUpComing = async (page) => {
     try {
-        const url = `${BASE_URL}movie/upcoming?api_key=${API_KEY}`
+        const url = `${BASE_URL}movie/upcoming?api_key=${API_KEY}&page=${page}`
         const response = await fetch(url)
         const data = await response.json()
         return data
