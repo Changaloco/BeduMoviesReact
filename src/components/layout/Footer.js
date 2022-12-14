@@ -19,13 +19,19 @@ export default function Footer() {
                     Emanuel Alamilla Hernandez
                   </a>
                 </li>
+                <li>
+                  <a href="https://www.themoviedb.org/" target="_blank">
+                    Powered by themoviedb
+                  </a>
+                </li>
               </ul>
             </div>
             <div className="col-md-6 item text">
               <h3>MOVIEREACT</h3>
               <p>
-                Movie React es una pagina web donde podemos conocer acerca de
-                las mejores peliculas de la actualidad.
+                MovieReact es una pagina web donde podemos conocer acerca de las
+                mejores peliculas de la actualida y acerca de las peliculas mas
+                interesantes del cine mexicano.
               </p>
             </div>
           </div>
